@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soil Assistant Chatbot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f2f5f3;
+    }
+    header {
+      background-color: #2f855a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #2f855a;
+    }
+    #chatbox {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #fafafa;
+    }
+    .user {
+      text-align: right;
+      margin: 8px 0;
+      color: #1a202c;
+    }
+    .bot {
+      text-align: left;
+      margin: 8px 0;
+      color: #2f855a;
+    }
+    input[type="text"] {
+      width: 75%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 8px 15px;
+      background-color: #2f855a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #276749;
+    }
+    a.button-link {
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: none;
+      background-color: #2b6cb0;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+    a.button-link:hover {
+      background-color: #2c5282;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #e6fffa;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Soil Knowledge Chatbot</h1>
+    <p>Learn about soils & use the Soil Analyzer</p>
+  </header>
+
+  <main>
+    <!-- Chatbot Section -->
+    <div class="card">
+      <h2>Soil Chatbot</h2>
+      <div id="chatbox"></div>
+      <input type="text" id="userInput" placeholder="Ask about soil..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <!-- Teachable Machine Section -->
+    <div class="card">
+      <h2>Soil Classification (AI)</h2>
+      <p>
+        Use the Soil Analyzer to classify soil using images. This AI system helps identify different soil types.
+      </p>
+      <a class="button-link" href="https://teachablemachine.withgoogle.com/models/H7gha6UMm/" target="_blank">
+        Open Soil Analyzer
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Soil Assistant Webpage
+  </footer>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+
+    function addMessage(text, className) {
+      const msg = document.createElement("div");
+      msg.className = className;
+      msg.textContent = text;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const userText = input.value.toLowerCase();
+      if (!userText) return;
+
+      addMessage(input.value, "user");
+      input.value = "";
+
+      let response = "That's an interesting question. I'll try to help you.";
+
+      if (userText.includes("alluvial")) {
+        response = "Alluvial soil is very fertile and found near rivers. It is ideal for crops like wheat and rice.";
+      } else if (userText.includes("black soil")) {
+        response = "Black soil is rich in clay and moisture. It is best for cotton cultivation.";
+      } else if (userText.includes("red soil")) {
+        response = "Red soil is rich in iron but low in nitrogen. It supports crops like millets and pulses.";
+      } else if (userText.includes("soil types")) {
+        response = "Common soil types include alluvial, black, red, laterite, and sandy soil.";
+      } else if (userText.includes("fertile")) {
+        response = "Alluvial soil is considered the most fertile soil.";
+      } else if (userText.includes("soil pollution") || userText.includes("pollution")) {
+        response = "Soil pollution occurs when harmful substances like plastics, chemicals, or waste mix with soil, reducing fertility.";
+      } else if (userText.includes("waste disposal") || userText.includes("disposing")) {
+        response = "Proper waste disposal includes recycling, composting organic waste, and avoiding dumping waste on land.";
+      } else if (userText.includes("plastic")) {
+        response = "Plastic waste in soil blocks water movement and harms soil organisms. Plastics should be recycled or disposed properly.";
+      } else if (userText.includes("compost")) {
+        response = "Composting converts organic waste into natural manure, which improves soil fertility.";
+      } else if (userText.includes("chemical waste")) {
+        response = "Chemical waste should never be dumped on soil as it contaminates groundwater and damages soil health.";
+      } else {
+        response = "How may I help you?";
+      }
+
+      setTimeout(() => addMessage(response, "bot"), 500);
+    }
+
+    addMessage("Hello! Ask me anything about soil.", "bot");
+  </script>
+
+</body>
+</html>
